@@ -11,10 +11,10 @@ const http = require("http")
 const {Server} = require("socket.io")
 const cors = require("cors")
 const port = process.env.PORT || 3000;
-//const port1 = process.env.PORT || 4001;
+const port1 = process.env.PORT || 4001;
 // express app 
 const app = express()
-var server = http.createServer(app)
+//var server = http.createServer(app)
 // middleware
 app.use(express.json())
 app.use(cors({
@@ -35,27 +35,25 @@ app.use('/api/faculty', facultyRoutes)
 mongoose.connect(process.env.MONG_URI)
     .then(() => {
         
-        
+        app.listen(port, () => {
+            //console.log('connected to db & listening on port', port)
+            console.log(`server is running in port ${port}`);
+        })
+            })
+            .catch((error) => {
+                console.log(error)
+            })
 // 3 listen to for request
 
 
     //socket server //new 12-7
-  server = app.listen(port, () => {
-    //console.log('connected to db & listening on port', port)
-    console.log(`server is running in port ${port}`);
-})
-    })
-    .catch((error) => {
-        console.log(error)
-    })
- 
- //http.createServer(app)
+ const server = http.createServer(app)
 const io = new Server(server, {
     cors: {
         origin: "https://charming-paprenjak-891a84.netlify.app",
         methods: ["GET", "POST"],
-        //allowedHeaders: ["my-custom-header"],
-        //credentials: true
+        allowedHeaders: ["my-custom-header"],
+        credentials: true
     },
 });
 
@@ -64,9 +62,9 @@ const io = new Server(server, {
     methods: ["GET", "POST"]
 }))*/
 
-/*server.listen( port, () => {
+server.listen( port1, () => {
     console.log("Server is running");
-});*/
+});
 
 
 io.on("connection", (socket) => {

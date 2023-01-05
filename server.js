@@ -14,7 +14,7 @@ const port = process.env.PORT || 3000;
 const port1 = process.env.PORT || 4001;
 // express app 
 const app = express()
-
+var server = http.createServer(app)
 // middleware
 app.use(express.json())
 app.use(cors({
@@ -37,7 +37,10 @@ mongoose.connect(process.env.MONG_URI)
         
 
 // 3 listen to for request
-app.listen(port, () => {
+
+
+    //socket server //new 12-7
+ server = app.listen(port, () => {
     //console.log('connected to db & listening on port', port)
     console.log(`server is running in port ${port}`);
 })
@@ -45,19 +48,22 @@ app.listen(port, () => {
     .catch((error) => {
         console.log(error)
     })
-
-    //socket server //new 12-7
-const server = http.createServer(app)
-const io = new Server(server, {
+//http.createServer(app)
+/*const io = new Server(server, {
     cors: {
         origin: "https://charming-paprenjak-891a84.netlify.app",
         methods: ["GET", "POST"],
     },
-});
+});*/
 
-server.listen( port1, () => {
+const io = new Server(server, cors({
+    origin: "https://charming-paprenjak-891a84.netlify.app",
+    methods: ["GET", "POST"]
+}))
+
+/*server.listen( port, () => {
     console.log("Server is running");
-});
+});*/
 
 
 io.on("connection", (socket) => {

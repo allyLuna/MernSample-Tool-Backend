@@ -53,7 +53,6 @@ const io = new Server(server, {
         origin: "https://charming-paprenjak-891a84.netlify.app",
         methods: ["GET", "POST"],
         transports: ["websocket", "polling"]
-    
     },
 });
 
@@ -62,7 +61,7 @@ const io = new Server(server, {
     methods: ["GET", "POST"]
 }))*/
 
-server.listen( port1, () => {
+server.listen( 4001, () => {
     console.log("Server is running");
 });
 

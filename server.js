@@ -9,7 +9,7 @@ const studentRoutes = require('./routes/students')
 const facultyRoutes = require('./routes/faculty')
 const http = require("http")
 const {Server} = require("socket.io")
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 // express app 
 const app = express()
 
@@ -31,7 +31,7 @@ mongoose.connect(process.env.MONG_URI)
         
 
 // 3 listen to for request
-app.listen(process.env.PORT, () => {
+app.listen(port, () => {
     //console.log('connected to db & listening on port', port)
     console.log(`server is running in port ${port}`);
 })

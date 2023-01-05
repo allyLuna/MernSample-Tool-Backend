@@ -50,10 +50,10 @@ mongoose.connect(process.env.MONG_URI)
  const server = http.createServer(app)
 const io = new Server(server, {
     cors: {
-        origin: "https://charming-paprenjak-891a84.netlify.app",
+        origin: "https://mernsample-tool.adaptable.app",
         methods: ["GET", "POST"],
-        allowedHeaders: ["my-custom-header"],
-        credentials: true
+        transports: ["websocket", "polling"]
+       
     },
 });
 

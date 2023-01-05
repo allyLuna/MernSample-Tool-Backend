@@ -9,12 +9,17 @@ const studentRoutes = require('./routes/students')
 const facultyRoutes = require('./routes/faculty')
 const http = require("http")
 const {Server} = require("socket.io")
+const cors = require("cors")
 const port = process.env.PORT || 3000;
 // express app 
 const app = express()
 
 // middleware
 app.use(express.json())
+app.use(cors({
+
+    origin: "https://mernsample-tool.adaptable.app"
+}))
 
 app.use((req,res, next) => {
     console.log(req.path, req.method)
@@ -44,7 +49,7 @@ app.listen(port, () => {
 const server = http.createServer(app)
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: "https://mernsample-tool.adaptable.app/",
         methods: ["GET", "POST"],
     },
 });

@@ -18,7 +18,7 @@ const app = express()
 app.use(express.json())
 app.use(cors({
 
-    origin: "https://mernsample-tool.adaptable.app"
+    origin: "https://charming-paprenjak-891a84.netlify.app"
 }))
 
 app.use((req,res, next) => {

@@ -54,7 +54,7 @@ const io = new Server(server, {
     },
 });
 
-server.listen( port, () => {
+server.listen( 4001, () => {
     console.log("Server is running");
 });
 

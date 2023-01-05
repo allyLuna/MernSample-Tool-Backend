@@ -11,6 +11,7 @@ const http = require("http")
 const {Server} = require("socket.io")
 const cors = require("cors")
 const port = process.env.PORT || 3000;
+const port1 = process.env.PORT || 4001;
 // express app 
 const app = express()
 

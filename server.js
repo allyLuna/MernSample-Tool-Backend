@@ -49,12 +49,12 @@ app.listen(port, () => {
 const server = http.createServer(app)
 const io = new Server(server, {
     cors: {
-        origin: "https://mernsample-tool.adaptable.app/",
+        origin: "https://charming-paprenjak-891a84.netlify.app",
         methods: ["GET", "POST"],
     },
 });
 
-server.listen( 4001, () => {
+server.listen( port, () => {
     console.log("Server is running");
 });
 

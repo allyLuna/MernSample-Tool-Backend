@@ -15,12 +15,14 @@ const port = process.env.PORT || 3000;
 // express app 
 const app = express()
 //var server = http.createServer(app)
+app.use(cors({
+    origin: "https://charming-paprenjak-891a84.netlify.app",
+    credentials: true,
+}))
 // middleware
 app.use(express.json())
 
-app.use(cors({
-    origin: "https://charming-paprenjak-891a84.netlify.app"
-}))
+
 
 app.use((req,res, next) => {
     console.log(req.path, req.method)
@@ -70,9 +72,7 @@ io.on("connection", (socket) => {
     });
 	socket.on("send_message", (data) => {
         socket.broadcast.emit("receive_message", data);
-        //socket.to(data.room).emit("receive_message", data);
-        //socket.to(data.room).emit("receive_message", data);
-       // console.log(data.room)
+       
 });
 })
 

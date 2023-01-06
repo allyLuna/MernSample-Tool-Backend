@@ -19,7 +19,6 @@ const app = express()
 app.use(express.json())
 
 app.use(cors({
-
     origin: "https://charming-paprenjak-891a84.netlify.app"
 }))
 
@@ -49,20 +48,14 @@ mongoose.connect(process.env.MONG_URI)
 
     //socket server //new 12-7
  const server = http.createServer(app)
-const io = new Server(server, {
-    cors: {
+const io = new Server(server, 
+    cors({
         origin: "https://charming-paprenjak-891a84.netlify.app",
         methods: ["GET", "POST"],
         transports: ["websocket", "polling"]
-    },
-});
+    }));
 
 
-
-/*const io = new Server(server, cors({
-    origin: "https://charming-paprenjak-891a84.netlify.app",
-    methods: ["GET", "POST"]
-}))*/
 
 server.listen( process.env.PORT, () => {
     console.log("Server is running");

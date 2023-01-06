@@ -15,10 +15,11 @@ const port = process.env.PORT || 3000;
 // express app 
 const app = express()
 //var server = http.createServer(app)
+
 app.use(cors({
-    origin: "https://charming-paprenjak-891a84.netlify.app",
-    credentials: true,
+    origin: "https://charming-paprenjak-891a84.netlify.app"
 }))
+
 // middleware
 app.use(express.json())
 

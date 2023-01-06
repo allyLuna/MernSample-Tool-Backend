@@ -11,7 +11,7 @@ const http = require("http")
 const {Server} = require("socket.io")
 const cors = require("cors")
 const port = process.env.PORT || 3000;
-const port1 = process.env.PORT || 4001;
+//const port1 = process.env.PORT || 4001;
 // express app 
 const app = express()
 //var server = http.createServer(app)
@@ -20,7 +20,7 @@ app.use(express.json())
 
 app.use(cors({
 
-    origin: "https://charming-paprenjak-891a84.netlify.app",
+    origin: "https://charming-paprenjak-891a84.netlify.app"
 }))
 
 app.use((req,res, next) => {

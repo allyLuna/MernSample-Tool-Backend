@@ -61,7 +61,7 @@ const io = new Server(server, ({
     methods: ["GET", "POST"]
 }))*/
 
-server.listen( 4001, () => {
+server.listen( process.env.PORT, () => {
     console.log("Server is running");
 });
 

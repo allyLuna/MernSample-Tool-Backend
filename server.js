@@ -9,7 +9,7 @@ const facultyRoutes = require('./routes/faculty')
 const http = require("http")
 const {Server} = require("socket.io")
 const port = process.env.PORT || 4000;
-
+const serverTiming = require('server-timing')
 // express app 
 const app = express()
 
@@ -19,15 +19,33 @@ app.use(cors({origin: 'https://charming-paprenjak-891a84.netlify.app'}))
 
 // middleware
 app.use(express.json())
+app.use(serverTiming())
 
 app.use((req,res, next) => {
     console.log(req.path, req.method)
+    res.startTime('file', 'File IO metric');
+  setTimeout(() => {
+    res.endTime('file');
+  }, 100);
     next()
 })
+app.use((req, res, next) => {
+    // you can see test end time response
+    res.startTime('test', 'forget to call endTime');
+    next();
+  });
+  app.use((req, res, next) => {
+    // All timings should be in milliseconds (s). See issue #9 (https://github.com/yosuke-furukawa/server-timing/issues/9).
+    res.setMetric('db', 100.0, 'Database metric');
+    res.setMetric('api', 200.0, 'HTTP/API metric');
+    res.setMetric('cache', 300.0, 'cache metric');
+    next();
+  });
 
 // routes
 app.use('/api/students', studentRoutes)
 app.use('/api/faculty', facultyRoutes)
+
 
 const server = http.createServer(app)
 const io = new Server(server, {

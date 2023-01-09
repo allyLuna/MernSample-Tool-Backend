@@ -6,7 +6,7 @@ const express = require('express') // 2 require the express package npm install 
 const mongoose = require('mongoose')
 const studentRoutes = require('./routes/students')
 const facultyRoutes = require('./routes/faculty')
-const https = require('node:https')
+const https = require("http")
 const {Server} = require("socket.io")
 const port = process.env.PORT || 4000;
 const serverTiming = require('server-timing')
@@ -47,7 +47,7 @@ app.use('/api/students', studentRoutes)
 app.use('/api/faculty', facultyRoutes)
 
 
-const server = https.createServer(app)
+const server = http.createServer(app)
 const io = new Server(server, {
     cors: {
         origin: "https://charming-paprenjak-891a84.netlify.app",

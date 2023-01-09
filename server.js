@@ -1,4 +1,3 @@
-
 // 2 npm init -y
 
 require('dotenv').config() // npm install dotenv
@@ -9,21 +8,17 @@ const studentRoutes = require('./routes/students')
 const facultyRoutes = require('./routes/faculty')
 const http = require("http")
 const {Server} = require("socket.io")
-const cors = require("cors")
-const port = process.env.PORT || 3000;
-//const port1 = process.env.PORT || 4001;
+const port = process.env.PORT || 4000;
+
 // express app 
 const app = express()
-//var server = http.createServer(app)
 
-app.use(cors({
-    origin: "https://charming-paprenjak-891a84.netlify.app"
-}))
+//cors origin is the client that we allow
+const cors = require("cors")
+app.use(cors({origin: 'https://charming-paprenjak-891a84.netlify.app/'}))
 
 // middleware
 app.use(express.json())
-
-
 
 app.use((req,res, next) => {
     console.log(req.path, req.method)
@@ -34,38 +29,44 @@ app.use((req,res, next) => {
 app.use('/api/students', studentRoutes)
 app.use('/api/faculty', facultyRoutes)
 
-// connect db 
-mongoose.connect(process.env.MONG_URI)
-    .then(() => {
-        
-        app.listen(port, () => {
-            //console.log('connected to db & listening on port', port)
-            console.log(`server is running in port ${port}`);
-        })
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-// 3 listen to for request
-
-
-    //socket server //new 12-7
- const server = http.createServer(app)
+const server = http.createServer(app)
 const io = new Server(server, {
     cors: {
-        origin: "https://charming-paprenjak-891a84.netlify.app",
+        origin: "https://charming-paprenjak-891a84.netlify.app/",
         methods: ["GET", "POST"],
         transports: ["websocket", "polling"]
     }});
 
+// connect db 
+mongoose.connect(process.env.MONG_URI)
+    .then(() => {
+        server.listen(port, () => {
+            console.log('connected to db & listening on port', process.env.PORT);
+        })
+    })
+        .catch(error => {
+            console.log('error', error);	
+        });
+    
+// 3 listen to for request
+/*app.listen(process.env.PORT, () => {
+    console.log('connected to db & listening on port', process.env.PORT)
+})
+    })
+    .catch((error) => {
+        console.log(error)
+    })*/
+
+    //socket server //new 12-7
 
 
-server.listen( process.env.PORT, () => {
+/*server.listen( app, () => {
     console.log("Server is running");
-});
+});*/
 
 
 io.on("connection", (socket) => {
+   
     console.log(`User Connected: ${socket.id}`);
 
     socket.on("join_room", (data) => {
@@ -75,6 +76,5 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("receive_message", data);
        
 });
+
 })
-
-
